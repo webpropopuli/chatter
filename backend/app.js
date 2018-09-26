@@ -5,9 +5,8 @@ var socket = require('socket.io');
 
 app.get('/', (req, res) => res.send("<p>I'm a server...don't touch me there</p>"))
 
-server = app.listen(5000, function(){
-    console.log('server listening on :5000')
-});
+const port = process.env.port || 5002
+server = app.listen(port, () => console.log(`server listening on :${port}`));
 
 io = socket(server);
 //USER CONNECT
@@ -19,7 +18,7 @@ io.on('connection', (socket) => {
     })
 });
 
-// USER DISCONNECT
+// USER DISCONNECT I think this needs to move into sockek.on scope...
 io.on('disconnection', (socket) => {
     console.log(`usrdisconn: ${socket.id}`);
 })
